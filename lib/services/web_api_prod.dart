@@ -22,7 +22,7 @@ class WebApiProd implements WebApi {
     try {
       getModel = await _networkInterface.get(
         baseUrl: "carirs-api.mgilangjanuar.com",
-        path: "api/v1/cities",
+        path: "cities",
         queryParams: requestParams ?? null,
       );
       apiResponse = getModel.response;
@@ -55,7 +55,7 @@ class WebApiProd implements WebApi {
     try {
       getModel = await _networkInterface.get(
         baseUrl: "carirs-api.mgilangjanuar.com",
-        path: "api/v1/provinces",
+        path: "provinces",
         queryParams: requestParams ?? null,
       );
       apiResponse = getModel.response;
