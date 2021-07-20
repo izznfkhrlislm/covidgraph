@@ -1,6 +1,7 @@
 import 'package:covidgraph/models/provinces.dart';
 import 'package:covidgraph/models/cities.dart';
-import 'package:covidgraph/serviceLocator.dart';
+import 'package:covidgraph/models/bedDetails.dart';
+import 'package:covidgraph/services/serviceLocator.dart';
 import 'package:covidgraph/services/web_api.dart';
 import 'package:covidgraph/utils/network.dart';
 
@@ -8,9 +9,24 @@ class WebApiProd implements WebApi {
   NetworkInterface _networkInterface = serviceLocator<NetworkInterface>();
 
   @override
-  Future<List<NetworkModel>> getBedDetails({required Map<String, dynamic> requestParams}) {
-    // TODO: implement getBedDetails
-    throw UnimplementedError();
+  Future<BedInfoList> getBedDetails({required Map<String, dynamic> requestParams}) async {
+    NetworkModel getModel;
+    dynamic apiResponse;
+    BedInfoList model;
+
+    try {
+      getModel = await _networkInterface.get(
+        baseUrl: "carirs-api.mgilangjanuar.com",
+        path: "cities",
+        queryParams: requestParams,
+      );
+      apiResponse = getModel.response;
+      model = BedInfoList.fromJson(apiResponse);
+    } on NetworkException catch (_) {
+      rethrow;
+    }
+
+    return model;
   }
 
   @override

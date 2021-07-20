@@ -1,4 +1,4 @@
-import 'package:covidgraph/flavor.dart';
+import 'package:covidgraph/enums/flavor.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
