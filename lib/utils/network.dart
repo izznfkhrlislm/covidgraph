@@ -36,20 +36,19 @@ class NetworkException implements Exception {
 }
 
 class NetworkInterface {
-  String url = "";
-  String? key = "";
   static const Map<String, String> REQUEST_HEADERS = {
     "Content-Type": "application/json"
   };
 
   Future<NetworkModel> post({
+    required String baseUrl,
     required String path,
     required dynamic bodyParams,
   }) async {
     try {
       NetworkModel model;
       model = await http.post(
-        Uri.https(url, "/api/v1/$path"),
+        Uri.https(baseUrl, "/api/v1/$path"),
         headers: REQUEST_HEADERS,
       ).then((response) async {
         if (response.statusCode >= 400) {
@@ -79,13 +78,14 @@ class NetworkInterface {
   }
 
   Future<NetworkModel> get({
+    required String baseUrl,
     required String path,
     Map<String, dynamic>? queryParams,
   }) async {
     try {
       NetworkModel model;
       model = await http.get(
-        Uri.https(url, "/api/v1/$path", queryParams),
+        Uri.https(baseUrl, "/api/v1/$path", queryParams),
         headers: REQUEST_HEADERS,
       ).then((response) async {
         if (response.statusCode >= 400) {
