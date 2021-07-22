@@ -6,13 +6,13 @@ class ProvinceInfo {
 
   ProvinceInfo.fromJson(Map<String, dynamic> parsedJson) {
     this.provinceId = parsedJson["id"];
-    this.provinceName = parsedJson["name"];
+    this.provinceName = parsedJson["value"];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data["id"] = this.provinceId;
-    data["name"] = this.provinceName;
+    data["value"] = this.provinceName;
 
     return data;
   }

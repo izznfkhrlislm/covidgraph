@@ -1,6 +1,7 @@
 import 'package:covidgraph/models/provinces.dart';
 import 'package:covidgraph/models/cities.dart';
 import 'package:covidgraph/models/bedDetails.dart';
+import 'package:covidgraph/models/hospitals.dart';
 import 'package:covidgraph/services/serviceLocator.dart';
 import 'package:covidgraph/services/web_api.dart';
 import 'package:covidgraph/utils/network.dart';
@@ -51,9 +52,24 @@ class WebApiProd implements WebApi {
   }
 
   @override
-  Future<List<NetworkModel>> getHospitalsByParams({Map<String, dynamic>? requestParams}) {
-    // TODO: implement getHospitalsByParams
-    throw UnimplementedError();
+  Future<HospitalList> getHospitalsByParams({Map<String, dynamic>? requestParams}) async {
+    NetworkModel getModel;
+    dynamic apiResponse;
+    HospitalList model;
+
+    try {
+      getModel = await _networkInterface.get(
+        baseUrl: "carirs-api.mgilangjanuar.com",
+        path: "hospitals",
+        queryParams: requestParams ?? null,
+      );
+      apiResponse = getModel.response;
+      model = HospitalList.fromJson(apiResponse);
+    } on NetworkException catch (_) {
+      rethrow;
+    }
+
+    return model;
   }
 
   @override

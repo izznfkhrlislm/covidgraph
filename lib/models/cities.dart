@@ -6,13 +6,13 @@ class CityInfo {
 
   CityInfo.fromJson(Map<String, dynamic> parsedJson) {
     this.cityId = parsedJson["id"];
-    this.cityName = parsedJson["name"];
+    this.cityName = parsedJson["value"];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data["id"] = this.cityId;
-    data["name"] = this.cityName;
+    data["value"] = this.cityName;
 
     return data;
   }
