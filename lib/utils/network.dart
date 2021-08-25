@@ -7,11 +7,7 @@ class NetworkModel {
   int? statusCode;
   String? errorMessage;
 
-  NetworkModel({
-    this.response,
-    this.statusCode,
-    this.errorMessage
-  });
+  NetworkModel({this.response, this.statusCode, this.errorMessage});
 }
 
 class NetworkException implements Exception {
@@ -47,33 +43,25 @@ class NetworkInterface {
   }) async {
     try {
       NetworkModel model;
-      model = await http.post(
+      model = await http
+          .post(
         Uri.https(baseUrl, "/api/v1/$path"),
         headers: REQUEST_HEADERS,
-      ).then((response) async {
-        if (response.statusCode >= 400) {
-          throw new NetworkException(
-            message: response.body,
-            statusCode: response.statusCode,
-            response: json.decode(response.body));
+      )
+          .then((response) async {
+        if (response.statusCode >= HttpStatus.badRequest) {
+          throw new NetworkException(message: response.body, statusCode: response.statusCode, response: json.decode(response.body));
         } else {
           dynamic responseBody = json.decode(response.body);
-          return NetworkModel(
-            statusCode: response.statusCode,
-            response: responseBody
-          );
+          return NetworkModel(statusCode: response.statusCode, response: responseBody);
         }
       });
 
       return model;
     } on Exception catch (e) {
-      throw new NetworkException(
-        message: e.toString(),
-        statusCode: HttpStatus.internalServerError,
-        response: {
-          "message": e.toString(),
-        }
-      );
+      throw new NetworkException(message: e.toString(), statusCode: HttpStatus.internalServerError, response: {
+        "message": e.toString(),
+      });
     }
   }
 
@@ -84,33 +72,25 @@ class NetworkInterface {
   }) async {
     try {
       NetworkModel model;
-      model = await http.get(
+      model = await http
+          .get(
         Uri.https(baseUrl, "/api/v1/$path", queryParams),
         headers: REQUEST_HEADERS,
-      ).then((response) async {
-        if (response.statusCode >= 400) {
-          throw new NetworkException(
-              message: response.body,
-              statusCode: response.statusCode,
-              response: json.decode(response.body));
+      )
+          .then((response) async {
+        if (response.statusCode >= HttpStatus.badRequest) {
+          throw new NetworkException(message: response.body, statusCode: response.statusCode, response: json.decode(response.body));
         } else {
           dynamic responseBody = json.decode(response.body);
-          return NetworkModel(
-              statusCode: response.statusCode,
-              response: responseBody
-          );
+          return NetworkModel(statusCode: response.statusCode, response: responseBody);
         }
       });
 
       return model;
     } on Exception catch (e) {
-      throw new NetworkException(
-        message: e.toString(),
-        statusCode: HttpStatus.internalServerError,
-        response: {
-          "message": e.toString()
-        }
-      );
+      throw new NetworkException(message: e.toString(), statusCode: HttpStatus.internalServerError, response: {
+        "message": e.toString()
+      });
     }
   }
 
@@ -123,33 +103,25 @@ class NetworkInterface {
   }) async {
     try {
       NetworkModel model;
-      model = await http.get(
+      model = await http
+          .get(
         Uri.https(baseUrl, path ?? "", queryParams),
         headers: REQUEST_HEADERS,
-      ).then((response) async {
-        if (response.statusCode >= 400) {
-          throw new NetworkException(
-              message: response.body,
-              statusCode: response.statusCode,
-              response: json.decode(response.body));
+      )
+          .then((response) async {
+        if (response.statusCode >= HttpStatus.badRequest) {
+          throw new NetworkException(message: response.body, statusCode: response.statusCode, response: json.decode(response.body));
         } else {
           dynamic responseBody = json.decode(response.body);
-          return NetworkModel(
-              statusCode: response.statusCode,
-              response: responseBody
-          );
+          return NetworkModel(statusCode: response.statusCode, response: responseBody);
         }
       });
 
       return model;
     } on Exception catch (e) {
-      throw new NetworkException(
-          message: e.toString(),
-          statusCode: HttpStatus.internalServerError,
-          response: {
-            "message": e.toString()
-          }
-      );
+      throw new NetworkException(message: e.toString(), statusCode: HttpStatus.internalServerError, response: {
+        "message": e.toString()
+      });
     }
   }
 }
