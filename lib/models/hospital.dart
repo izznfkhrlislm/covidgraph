@@ -1,5 +1,5 @@
-import 'package:covidgraph/models/cities.dart';
-import 'package:covidgraph/models/provinces.dart';
+import 'package:covidgraph/models/city.dart';
+import 'package:covidgraph/models/province.dart';
 
 class HospitalInfo {
   List<String>? tags;

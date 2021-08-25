@@ -113,4 +113,43 @@ class NetworkInterface {
       );
     }
   }
+
+  /// [getGeneric] is the HTTP API GET function where the host URI
+  /// is dynamic and the path after that is also dynamic (and optional).
+  Future<NetworkModel> getGeneric({
+    required String baseUrl,
+    String? path,
+    Map<String, dynamic>? queryParams,
+  }) async {
+    try {
+      NetworkModel model;
+      model = await http.get(
+        Uri.https(baseUrl, path ?? "", queryParams),
+        headers: REQUEST_HEADERS,
+      ).then((response) async {
+        if (response.statusCode >= 400) {
+          throw new NetworkException(
+              message: response.body,
+              statusCode: response.statusCode,
+              response: json.decode(response.body));
+        } else {
+          dynamic responseBody = json.decode(response.body);
+          return NetworkModel(
+              statusCode: response.statusCode,
+              response: responseBody
+          );
+        }
+      });
+
+      return model;
+    } on Exception catch (e) {
+      throw new NetworkException(
+          message: e.toString(),
+          statusCode: HttpStatus.internalServerError,
+          response: {
+            "message": e.toString()
+          }
+      );
+    }
+  }
 }
